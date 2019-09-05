@@ -1,0 +1,4 @@
+type Offer {
+  id: ID!
+  messages: [Message!]
+}

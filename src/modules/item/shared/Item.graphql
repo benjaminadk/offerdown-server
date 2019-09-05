@@ -1,0 +1,36 @@
+enum Category {
+  APPLIANCES
+  BABY_KID
+  CAR_TRUCK
+  CELL_PHONES
+  CLOTHING_SHOES
+  FURNITURE
+  GAMES_TOYS
+  GENERAL
+  SPORTS_OUTDOORS
+  TOOLS
+}
+
+enum Condition {
+  NEW
+  RECONDITIONED
+  GREAT
+  GOOD
+  POOR
+}
+
+type Item {
+  id: ID!
+  createdAt: String!
+  name: String!
+  description: String!
+  category: Category!
+  condition: Condition!
+  price: Int!
+  images: [String!]!
+  location: String!
+  latitude: Float!
+  longitude: Float!
+  isAd: Boolean!
+  seller: User!
+}

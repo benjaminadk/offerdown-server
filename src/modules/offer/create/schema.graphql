@@ -1,0 +1,3 @@
+type Mutation {
+  createOffer(itemId: ID!, text: String): [Error!]
+}
