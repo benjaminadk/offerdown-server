@@ -17,9 +17,13 @@ export class Offer extends BaseEntity {
 
   @CreateDateColumn() createdAt: string
 
-  @Column('uuid') userId: string
+  @Column('uuid') sellerId: string
 
-  @ManyToOne(() => User, user => user.offers) user: User
+  @ManyToOne(() => User, user => user.selling) seller: User
+
+  @Column('uuid') buyerId: string
+
+  @ManyToOne(() => User, user => user.buying) buyer: User
 
   @Column('uuid') itemId: string
 

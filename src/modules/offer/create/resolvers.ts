@@ -12,14 +12,14 @@ const validator = yup
   .max(500)
   .required()
 
-const createOffer: Resolver = async (_, { itemId, text }, { session: { userId } }) => {
+const createOffer: Resolver = async (_, { itemId, sellerId, text }, { session: { userId } }) => {
   try {
     await validator.validate(text, { abortEarly: false })
   } catch (error) {
     return formatYupError(error)
   }
 
-  const offer = Offer.create({ itemId, userId })
+  const offer = Offer.create({ itemId, sellerId, buyerId: userId })
   await offer.save()
 
   const message = Message.create({ text, offerId: offer.id, userId })

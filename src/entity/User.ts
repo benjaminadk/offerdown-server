@@ -33,7 +33,9 @@ export class User extends BaseEntity {
 
   @OneToMany(() => Item, item => item.user) items: Item[]
 
-  @OneToMany(() => Offer, offer => offer.user, { eager: true }) offers: Offer[]
+  @OneToMany(() => Offer, offer => offer.seller) selling: Offer[]
+
+  @OneToMany(() => Offer, offer => offer.buyer) buying: Offer[]
 
   @OneToMany(() => Message, message => message.user) messages: Message[]
 
