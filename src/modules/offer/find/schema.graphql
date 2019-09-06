@@ -1,3 +1,8 @@
+enum OfferType {
+  BUYING
+  SELLING
+}
+
 type Query {
-  findOffers: [Offer!]
+  findOffers(type: OfferType!): [Offer!]
 }

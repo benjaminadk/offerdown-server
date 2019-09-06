@@ -1,3 +1,9 @@
+input OfferInput {
+  itemId: ID!
+  sellerId: ID!
+  text: String!
+}
+
 type Mutation {
-  createOffer(itemId: ID!, sellerId: ID!, text: String!): [Error!]
+  createOffer(input: OfferInput!): [Error!]
 }

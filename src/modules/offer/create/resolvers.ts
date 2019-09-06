@@ -7,17 +7,23 @@ import { formatYupError } from '../../../utils/formatYupError'
 import { Offer } from '../../../entity/Offer'
 import { Message } from '../../../entity/Message'
 
-const validator = yup
-  .string()
-  .max(500)
-  .required()
+const validator = yup.object().shape({
+  itemId: yup.string().required(),
+  sellerId: yup.string().required(),
+  text: yup
+    .string()
+    .max(500)
+    .required()
+})
 
-const createOffer: Resolver = async (_, { itemId, sellerId, text }, { session: { userId } }) => {
+const createOffer: Resolver = async (_, { input }, { session: { userId } }) => {
   try {
-    await validator.validate(text, { abortEarly: false })
+    await validator.validate(input, { abortEarly: false })
   } catch (error) {
     return formatYupError(error)
   }
+
+  const { itemId, sellerId, text } = input
 
   const offer = Offer.create({ itemId, sellerId, buyerId: userId })
   await offer.save()
