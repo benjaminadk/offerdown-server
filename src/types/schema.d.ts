@@ -25,7 +25,9 @@ __typename: "Query";
 findItems: Array<IItem> | null;
 viewItem: IItem | null;
 findMessages: Array<IMessage> | null;
-findOffers: Array<IOffer> | null;
+findSellingOffers: Array<IOffer> | null;
+findBuyingOffers: Array<IOffer> | null;
+findSellingOffersByItemId: Array<IOffer> | null;
 me: IUser | null;
 }
 
@@ -33,8 +35,8 @@ interface IViewItemOnQueryArguments {
 id: string;
 }
 
-interface IFindOffersOnQueryArguments {
-type: OfferType;
+interface IFindSellingOffersByItemIdOnQueryArguments {
+itemId: string;
 }
 
 interface IItem {
@@ -86,19 +88,18 @@ image: string;
 interface IMessage {
 __typename: "Message";
 id: string;
+createdAt: string;
 text: string;
 user: IUser;
-}
-
-const enum OfferType {
-BUYING = 'BUYING',
-SELLING = 'SELLING'
 }
 
 interface IOffer {
 __typename: "Offer";
 id: string;
 messages: Array<IMessage> | null;
+item: IItem;
+seller: IUser;
+buyer: IUser;
 }
 
 interface IMutation {

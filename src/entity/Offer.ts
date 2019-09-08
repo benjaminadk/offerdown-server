@@ -19,15 +19,15 @@ export class Offer extends BaseEntity {
 
   @Column('uuid') sellerId: string
 
-  @ManyToOne(() => User, user => user.selling) seller: User
+  @ManyToOne(() => User, user => user.selling, { eager: true }) seller: User
 
   @Column('uuid') buyerId: string
 
-  @ManyToOne(() => User, user => user.buying) buyer: User
+  @ManyToOne(() => User, user => user.buying, { eager: true }) buyer: User
 
   @Column('uuid') itemId: string
 
-  @ManyToOne(() => Item) item: Item
+  @ManyToOne(() => Item, item => item.offers, { eager: true }) item: Item
 
   @OneToMany(() => Message, message => message.offer, { eager: true }) messages: Message[]
 }

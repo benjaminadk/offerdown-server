@@ -4,20 +4,22 @@ import { ResolverMap, Resolver } from '../../../types/graphql-utils'
 import { Offer } from '../../../entity/Offer'
 import { isAuthenticated } from '../../../utils/permissions'
 
-const findOffers: Resolver = async (_, { type }, { session: { userId } }) => {
-  if (type === 'BUYING') {
-    return Offer.find({ where: { buyerId: userId } })
-  }
+const findSellingOffers: Resolver = async (_, __, { session: { userId } }) => {
+  return Offer.find({ where: { sellerId: userId } })
+}
 
-  if (type === 'SELLING') {
-    return Offer.find({ where: { sellerId: userId } })
-  }
+const findBuyingOffers: Resolver = async (_, __, { session: { userId } }) => {
+  return Offer.find({ where: { buyerId: userId } })
+}
 
-  throw Error('type argument must be of enum OfferType')
+const findSellingOffersByItemId: Resolver = async (_, { itemId }, { session: { userId } }) => {
+  return Offer.find({ where: { itemId, sellerId: userId } })
 }
 
 export const resolvers: ResolverMap = {
   Query: {
-    findOffers: combineResolvers(isAuthenticated, findOffers)
+    findSellingOffers: combineResolvers(isAuthenticated, findSellingOffers),
+    findBuyingOffers: combineResolvers(isAuthenticated, findBuyingOffers),
+    findSellingOffersByItemId: combineResolvers(isAuthenticated, findSellingOffersByItemId)
   }
 }

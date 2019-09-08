@@ -25,6 +25,14 @@ const createOffer: Resolver = async (_, { input }, { session: { userId } }) => {
 
   const { itemId, sellerId, text } = input
 
+  const existingOffer = await Offer.findOne({ where: { itemId, buyerId: userId } })
+
+  if (existingOffer) {
+    const message = Message.create({ text, offerId: existingOffer.id, userId })
+    await message.save()
+    return null
+  }
+
   const offer = Offer.create({ itemId, sellerId, buyerId: userId })
   await offer.save()
 
