@@ -9,8 +9,8 @@ export const resolvers: ResolverMap = {
     }
   },
   Query: {
-    findMessages: async () => {
-      return Message.find()
+    findMessages: async (_, { offerId }) => {
+      return Message.find({ where: { offerId } })
     }
   }
 }

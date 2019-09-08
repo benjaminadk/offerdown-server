@@ -2,4 +2,5 @@ type Query {
   findSellingOffers: [Offer!]
   findBuyingOffers: [Offer!]
   findSellingOffersByItemId(itemId: ID!): [Offer!]
+  findBuyingOffersByItemId(itemId: ID!): [Offer!]
 }

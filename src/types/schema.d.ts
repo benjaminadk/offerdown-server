@@ -3,7 +3,7 @@
 
 declare namespace GQL {
 interface IGraphQLResponseRoot {
-data?: IQuery | IMutation;
+data?: IQuery | IMutation | ISubscription;
 errors?: Array<IGraphQLResponseError>;
 }
 
@@ -33,6 +33,10 @@ me: IUser | null;
 
 interface IViewItemOnQueryArguments {
 id: string;
+}
+
+interface IFindMessagesOnQueryArguments {
+offerId: string;
 }
 
 interface IFindSellingOffersByItemIdOnQueryArguments {
@@ -104,12 +108,18 @@ buyer: IUser;
 
 interface IMutation {
 __typename: "Mutation";
+createMessage: boolean;
 createOffer: Array<IError> | null;
 sendForgotPasswordEmail: boolean | null;
 forgotPasswordChange: Array<IError> | null;
 signin: Array<IError> | null;
 signout: boolean | null;
 signup: Array<IError> | null;
+}
+
+interface ICreateMessageOnMutationArguments {
+text: string;
+offerId: string;
 }
 
 interface ICreateOfferOnMutationArguments {
@@ -146,6 +156,15 @@ interface IError {
 __typename: "Error";
 path: string;
 message: string;
+}
+
+interface ISubscription {
+__typename: "Subscription";
+newMessage: IMessage;
+}
+
+interface INewMessageOnSubscriptionArguments {
+offerId: string;
 }
 }
 

@@ -16,10 +16,15 @@ const findSellingOffersByItemId: Resolver = async (_, { itemId }, { session: { u
   return Offer.find({ where: { itemId, sellerId: userId } })
 }
 
+const findBuyingOffersByItemId: Resolver = async (_, { itemId }, { session: { userId } }) => {
+  return Offer.find({ where: { itemId, buyerId: userId } })
+}
+
 export const resolvers: ResolverMap = {
   Query: {
     findSellingOffers: combineResolvers(isAuthenticated, findSellingOffers),
     findBuyingOffers: combineResolvers(isAuthenticated, findBuyingOffers),
-    findSellingOffersByItemId: combineResolvers(isAuthenticated, findSellingOffersByItemId)
+    findSellingOffersByItemId: combineResolvers(isAuthenticated, findSellingOffersByItemId),
+    findBuyingOffersByItemId: combineResolvers(isAuthenticated, findBuyingOffersByItemId)
   }
 }

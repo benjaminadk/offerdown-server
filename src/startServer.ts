@@ -6,6 +6,7 @@ import * as session from 'express-session'
 import * as connectRedis from 'connect-redis'
 import * as RateLimit from 'express-rate-limit'
 import * as RateLimitRedisStore from 'rate-limit-redis'
+import { RedisPubSub } from 'graphql-redis-subscriptions'
 
 import { createTypeormConnection } from './utils/createTypeormConnection'
 import { generateSchema } from './utils/generateSchema'
@@ -15,6 +16,7 @@ import { confirmEmail } from './routes/confirmEmail'
 import { createTestConnection } from './testUtils/createTestConnection'
 
 const RedisStore = connectRedis(session as any)
+const pubsub = new RedisPubSub()
 
 export const startServer = async () => {
   if (process.env.NODE_ENV === 'test') {
@@ -23,12 +25,13 @@ export const startServer = async () => {
 
   const server = new GraphQLServer({
     schema: generateSchema() as any,
-    context: ({ request }) => {
+    context: ({ request }: any) => {
       return {
         redis,
-        url: request.protocol + '://' + request.get('host'),
-        session: request.session,
-        request
+        url: request ? request.protocol + '://' + request.get('host') : '',
+        session: request ? request.session : undefined,
+        request,
+        pubsub
       }
     }
   })
@@ -73,6 +76,7 @@ export const startServer = async () => {
 
   const app = await server.start({
     port: process.env.NODE_ENV === 'test' ? 0 : process.env.PORT,
+    subscriptions: '/',
     cors: {
       origin: process.env.NODE_ENV === 'test' ? '*' : (process.env.FRONTEND as string),
       credentials: true
