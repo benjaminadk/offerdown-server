@@ -10,6 +10,12 @@
     "synchronize": true,
     "logging": false,
     "dropSchema": false,
+    "tracing": true,
+    "cache": {
+      "type": "redis",
+      "duration": 10000,
+      "options": { "host": "localhost", "port": "6379" }
+    },
     "entities": ["src/entity/**/*.ts"],
     "migrations": ["src/migration/**/*.ts"],
     "subscribers": ["src/subscriber/**/*.ts"],

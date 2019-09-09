@@ -27,6 +27,12 @@ export class User extends BaseEntity {
 
   @Column('varchar', { length: 255 }) image: string
 
+  @Column('varchar', { length: 100 }) location: string
+
+  @Column('double precision') latitude: number
+
+  @Column('double precision') longitude: number
+
   @Column('boolean', { default: false }) confirmed: boolean
 
   @Column('boolean', { default: false }) forgotPasswordLocked: boolean

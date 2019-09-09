@@ -9,14 +9,14 @@ import { EmailService } from '../../../services/EmailService'
 
 export const resolvers: ResolverMap = {
   Mutation: {
-    signup: async (_, args: GQL.ISignupOnMutationArguments, { redis, url }) => {
+    signup: async (_, { input }, { redis, url }) => {
       try {
-        await validator.validate(args, { abortEarly: false })
+        await validator.validate(input, { abortEarly: false })
       } catch (err) {
         return formatYupError(err)
       }
 
-      const { email, name, password } = args
+      const { email, ...rest } = input
 
       const userExists = await User.findOne({
         where: { email },
@@ -32,7 +32,7 @@ export const resolvers: ResolverMap = {
         ]
       }
 
-      const user = User.create({ email, name, password })
+      const user = User.create({ email, ...rest })
 
       await user.save()
 

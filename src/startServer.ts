@@ -6,17 +6,15 @@ import * as session from 'express-session'
 import * as connectRedis from 'connect-redis'
 import * as RateLimit from 'express-rate-limit'
 import * as RateLimitRedisStore from 'rate-limit-redis'
-import { RedisPubSub } from 'graphql-redis-subscriptions'
 
 import { createTypeormConnection } from './utils/createTypeormConnection'
 import { generateSchema } from './utils/generateSchema'
-import { redis } from './services/redis'
+import { redis, pubsub } from './services/redis'
 import { sessionPrefix, fifteenMinutes, oneWeek } from './constants'
 import { confirmEmail } from './routes/confirmEmail'
 import { createTestConnection } from './testUtils/createTestConnection'
 
 const RedisStore = connectRedis(session as any)
-const pubsub = new RedisPubSub()
 
 export const startServer = async () => {
   if (process.env.NODE_ENV === 'test') {
@@ -80,7 +78,8 @@ export const startServer = async () => {
     cors: {
       origin: process.env.NODE_ENV === 'test' ? '*' : (process.env.FRONTEND as string),
       credentials: true
-    }
+    },
+    tracing: true
   })
 
   console.log(`Server listening on http://localhost:${process.env.PORT}`)

@@ -21,6 +21,9 @@ export class SeedData1567195870663 implements MigrationInterface {
         email: 'benjaminadk@gmail.com',
         password: await bcrypt.hash('password', 10),
         image: `https://www.gravatar.com/avatar/${md5('benjaminadk@gmail.com')}?d=mp`,
+        location: 'San Pedro, CA',
+        latitude: 33.7192,
+        longitude: -118.2895,
         confirmed: true,
         forgotPasswordLocked: false
       }
@@ -31,6 +34,9 @@ export class SeedData1567195870663 implements MigrationInterface {
         email: 'test@test.test',
         password: await bcrypt.hash('testtest', 10),
         image: `https://www.gravatar.com/avatar/${md5('test@test.test')}?d=mp`,
+        location: 'Anaheim, CA',
+        latitude: 33.8107,
+        longitude: -117.8967,
         confirmed: true,
         forgotPasswordLocked: false
       }
@@ -55,9 +61,6 @@ export class SeedData1567195870663 implements MigrationInterface {
               condition: Condition[row[3] as any],
               price: Number(row[4]),
               images: row[5].split(','),
-              location: row[6],
-              latitude: Number(row[7]),
-              longitude: Number(row[8]),
               userId: adminId
             }
             const itemPromise = getRepository('items', 'development').save(item)

@@ -28,9 +28,6 @@ type Item {
   condition: Condition!
   price: Int!
   images: [String!]!
-  location: String!
-  latitude: Float!
-  longitude: Float!
   isAd: Boolean!
   seller: User!
 }

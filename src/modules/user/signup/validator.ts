@@ -20,5 +20,8 @@ export const validator = yup.object().shape({
   password: yup
     .string()
     .min(8, passwordNotLongEnough)
-    .max(255)
+    .max(255),
+  location: yup.string(),
+  latitude: yup.number(),
+  longitude: yup.number()
 })

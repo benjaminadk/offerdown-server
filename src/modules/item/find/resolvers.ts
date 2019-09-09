@@ -9,7 +9,7 @@ export const resolvers: ResolverMap = {
   },
   Query: {
     findItems: async () => {
-      return Item.find()
+      return Item.find({ cache: true })
     }
   }
 }

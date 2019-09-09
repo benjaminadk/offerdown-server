@@ -28,6 +28,7 @@ findMessages: Array<IMessage> | null;
 findSellingOffers: Array<IOffer> | null;
 findBuyingOffers: Array<IOffer> | null;
 findSellingOffersByItemId: Array<IOffer> | null;
+findBuyingOffersByItemId: Array<IOffer> | null;
 me: IUser | null;
 }
 
@@ -43,6 +44,10 @@ interface IFindSellingOffersByItemIdOnQueryArguments {
 itemId: string;
 }
 
+interface IFindBuyingOffersByItemIdOnQueryArguments {
+itemId: string;
+}
+
 interface IItem {
 __typename: "Item";
 id: string;
@@ -53,9 +58,6 @@ category: Category;
 condition: Condition;
 price: number;
 images: Array<string>;
-location: string;
-latitude: number;
-longitude: number;
 isAd: boolean;
 seller: IUser;
 }
@@ -87,6 +89,9 @@ id: string;
 name: string;
 email: string;
 image: string;
+location: string | null;
+latitude: number | null;
+longitude: number | null;
 }
 
 interface IMessage {
@@ -141,9 +146,7 @@ password: string;
 }
 
 interface ISignupOnMutationArguments {
-email: string;
-name: string;
-password: string;
+input: ISignupInput;
 }
 
 interface IOfferInput {
@@ -156,6 +159,15 @@ interface IError {
 __typename: "Error";
 path: string;
 message: string;
+}
+
+interface ISignupInput {
+email: string;
+name: string;
+password: string;
+location: string;
+latitude: number;
+longitude: number;
 }
 
 interface ISubscription {

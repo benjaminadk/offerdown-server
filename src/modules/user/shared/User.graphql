@@ -3,4 +3,7 @@ type User {
   name: String!
   email: String!
   image: String!
+  location: String
+  latitude: Float
+  longitude: Float
 }

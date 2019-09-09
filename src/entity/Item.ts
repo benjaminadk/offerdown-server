@@ -50,12 +50,6 @@ export class Item extends BaseEntity {
 
   @Column('simple-array') images: string[]
 
-  @Column('varchar', { length: 100 }) location: string
-
-  @Column('double precision') latitude: number
-
-  @Column('double precision') longitude: number
-
   @Column('bool', { default: false }) isAd: boolean
 
   @Column('uuid') userId: string

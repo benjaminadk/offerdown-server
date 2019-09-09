@@ -16,6 +16,9 @@ faker.seed(Date.now())
 const email = faker.internet.email()
 const name = faker.internet.userName()
 const password = faker.internet.password()
+// const location = `${faker.address.city()}, ${faker.address.stateAbbr()}`
+// const latitude = faker.address.latitude()
+// const longitude = faker.address.longitude()
 
 const client = new TestClient(process.env.TEST_HOST as string)
 
